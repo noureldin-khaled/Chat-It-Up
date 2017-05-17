@@ -5,7 +5,7 @@ module.exports = function(mongoose) {
     var userSchema = new Schema({
         username   : { type : String, required : true, unique : true },
         password   : { type : String, required : true },
-        online     : { type : Boolean, default : true },
+        online     : { type : Boolean, default : false },
         created_at : Date,
         updated_at : Date
     });
@@ -25,9 +25,9 @@ module.exports = function(mongoose) {
         next();
     });
 
-    userSchema.method.validPassword = function(password) {
+    userSchema.methods.validPassword = function(password) {
         return bcrypt.compareSync(password, this.password);
     };
 
     module.exports.User = mongoose.model('User', userSchema);
-}
+};

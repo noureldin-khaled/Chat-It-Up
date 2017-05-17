@@ -12,4 +12,4 @@ module.exports.connect = function(callback) {
             callback();
         }
     });
-}
+};

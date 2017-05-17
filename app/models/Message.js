@@ -2,10 +2,10 @@ module.exports = function(mongoose) {
     var Schema = mongoose.Schema;
 
     var messageSchema = new Schema({
-        content    : { type : String, required : true },
-        seen       : { type : Boolean, default : false },
-        sender     : { type : Schema.Types.ObjectId, ref    : 'User' },
-        recipient  : { type : Schema.Types.ObjectId, ref    : 'User' },
+        content    : { type : String, required           : true },
+        seen       : { type : Boolean, default           : false },
+        sender     : { type : Schema.Types.ObjectId, ref : 'User' },
+        recipient  : { type : Schema.Types.ObjectId, ref : 'User' },
         created_at : Date,
         updated_at : Date
     });
@@ -23,4 +23,4 @@ module.exports = function(mongoose) {
     });
 
     module.exports.Message = mongoose.model('Message', messageSchema);
-}
+};

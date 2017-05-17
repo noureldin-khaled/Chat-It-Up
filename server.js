@@ -14,7 +14,7 @@ db.connect(function(err) {
         process.exit(0);
     }
     else {
-        console.log('Successfully connected to database.');
+        console.log('Connected to database successfully.');
 
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended : false }));
