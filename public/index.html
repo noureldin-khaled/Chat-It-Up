@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Chat It Up</title>
 
     <!-- Load icon -->
@@ -10,36 +11,45 @@
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="css/libraries/angular-material.min.css">
 
     <!-- jQuery -->
     <script src="js/libraries/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 
     <!-- Angular -->
     <script src="js/libraries/angular.min.js"></script>
     <script src="js/libraries/angular-route.min.js"></script>
     <script src="js/libraries/angular-animate.min.js"></script>
-    <script src="js/libraries/angular-aria.min.js"></script>
     <script src="js/libraries/angular-messages.min.js"></script>
-    <script src="js/libraries/angular-material.min.js"></script>
 
     <!-- Scripts -->
     <script src="js/core.js"></script>
 
     <!-- Services -->
+    <script src="js/services/UserSrv.js"></script>
 
     <!-- Directives -->
 
     <!-- Controllers -->
     <script src="js/controllers/MainCtrl.js"></script>
     <script src="js/controllers/LoginCtrl.js"></script>
+    <script src="js/controllers/DocumentCtrl.js"></script>
 
     <base href="/">
 </head>
 
-<body>
+<body ng-controller="DocumentCtrl">
 
-    <div ng-view></div>
+    <div class="container" ng-view></div>
 
 </body>
 

@@ -108,7 +108,11 @@ module.exports = {
 
                         res.status(200).json({
                             status: 'Succeeded',
-                            token: token
+                            user: {
+                                _id: user._id,
+                                username: user.username,
+                                token: token
+                            }
                         });
                     });
                 }
