@@ -1,10 +1,11 @@
 module.exports = function(app) {
     app.get('/', function(req, res) {
-        res.send('Welcome...');
+        res.sendFile('index.html');
     });
 
     require('./AuthResource')(app);
     require('./UserResource')(app);
+    require('./MessageResource')(app);
 
     app.use(function(req, res) {
         res.status(404).json({

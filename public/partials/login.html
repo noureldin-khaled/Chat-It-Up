@@ -1,0 +1,25 @@
+<div class="container">
+    <md-content layout-padding>
+        <div ng-form="LoginForm">
+            <!-- <div layout-gt-sm="row"> -->
+                <md-input-container>
+                    <label>Username</label>
+                    <input name="username" ng-model="c.user.username" required>
+                    <div ng-messages="LoginForm.username.$error">
+                        <div ng-message="required">This is required!</div>
+                    </div>
+                </md-input-container>
+            <!-- </div> -->
+
+            <!-- <div layout-gt-sm="row"> -->
+                <md-input-container>
+                    <label>Password</label>
+                    <input name="password" ng-model="c.user.password" required>
+                    <div ng-messages="LoginForm.password.$error">
+                        <div ng-message="required">This is required!</div>
+                    </div>
+                </md-input-container>
+            <!-- </div> -->
+        </div>
+    </md-content>
+</div>

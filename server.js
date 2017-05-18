@@ -16,6 +16,8 @@ db.connect(function(err) {
     else {
         console.log('Connected to database successfully.');
 
+        app.use(express.static('public'));
+
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended : false }));
 
