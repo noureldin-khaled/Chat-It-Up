@@ -87,6 +87,22 @@ App.controller('MainCtrl', function(UserSrv, $interval, $location) {
         return false;
     };
 
+    var hasUnseenMessages = function() {
+        var idx = -1;
+        for (var i = 0; i < self.users.length && idx == -1; i++) {
+            if (self.users[i]._id == self.selected) {
+                idx = i;
+            }
+        }
+
+        if (idx == -1) {
+            return false;
+        }
+        else {
+            return self.users[idx].unseen > 0;
+        }
+    };
+
     UserSrv.getMessages().then(function(res) {
         recipients = res.data.result;
         if (usersModified()) {
@@ -136,7 +152,8 @@ App.controller('MainCtrl', function(UserSrv, $interval, $location) {
                 self.displayMessages = messages;
             }
 
-            if (self.selected != -1) {
+            if (hasUnseenMessages()) {
+                console.log('updating seen');
                 UserSrv.updateMessages(self.selected);
             }
         }, function(err) {
