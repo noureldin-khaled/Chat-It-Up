@@ -1,15 +1,17 @@
 /**
  * A controller for the login.html partial
  */
-App.controller('LoginCtrl', function(UserSrv, $location) {
+App.controller('LoginCtrl', function(UserSrv, $location, $cookies) {
     var self = this;
 
     self.user = {};
     self.submitted = false;
     self.error_msg = null;
+    self.remember_me = false;
 
     /* logout the current user if for some reason he/she hasn't been logged out */
     if (UserSrv.getUser()) {
+        $cookies.remove('auth');
         UserSrv.logout();
     }
 
@@ -20,6 +22,9 @@ App.controller('LoginCtrl', function(UserSrv, $location) {
         if (self.LoginForm.$valid) {
             UserSrv.login(self.user).then(function(res) {
                 UserSrv.setUser(res.data.user);
+                if (self.remember_me) {
+                    $cookies.put('auth', JSON.stringify(res.data.user));
+                }
                 $location.url('/');
             }, function(err) {
                 console.log(err);

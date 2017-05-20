@@ -1,11 +1,10 @@
 /**
  * A controller for the main.html partial
  */
-App.controller('MainCtrl', function(UserSrv, $interval, $location) {
+App.controller('MainCtrl', function(UserSrv, $interval, $location, $cookies) {
     var self = this;
 
     self.user = UserSrv.getUser();
-
     var recipients = [];
     self.selected = -1;
     self.displayMessages = [];
@@ -15,6 +14,7 @@ App.controller('MainCtrl', function(UserSrv, $interval, $location) {
     /* function to logout the user */
     self.logout = function() {
         UserSrv.logout().then(function(res) {
+            $cookies.remove('auth');
             $location.url('/login');
         }, function(err) {
             console.log(err);

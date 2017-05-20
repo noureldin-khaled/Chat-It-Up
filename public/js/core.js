@@ -1,4 +1,4 @@
-App = angular.module('App', ['ngRoute', 'ngMessages']);
+App = angular.module('App', ['ngRoute', 'ngMessages', 'ngCookies']);
 
 /* App configuration */
 App.config(function($routeProvider, $locationProvider) {
@@ -11,8 +11,15 @@ App.config(function($routeProvider, $locationProvider) {
         controller: 'MainCtrl',
         controllerAs: 'c',
         resolve: {
-            load: function($q, UserSrv){
+            load: function($q, UserSrv, $cookies){
                 var defer = $q.defer();
+                
+                var auth = $cookies.get('auth');
+                if (auth) {
+                    auth = JSON.parse(auth);
+                    UserSrv.setUser(auth);
+                }
+
                 if(UserSrv.getUser()){
                     defer.resolve();
                 } else {

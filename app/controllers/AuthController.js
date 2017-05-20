@@ -124,9 +124,7 @@ module.exports = {
 
                     /* create an authentication token */
                     var jwt = require('jsonwebtoken');
-                    var token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-                        expiresIn: 60*60*24
-                    });
+                    var token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
 
                     /* update the online status of the user */
                     user.online = true;
