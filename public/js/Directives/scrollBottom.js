@@ -1,3 +1,6 @@
+/**
+ * A directive to handle auto scrolling to the bottom of the list whenever the ng-repeat finishes
+ */
 App.directive('scrollBottom', function ($timeout) {
     return {
         scope: {

@@ -1,3 +1,6 @@
+/**
+ * A controller for the main.html partial
+ */
 App.controller('MainCtrl', function(UserSrv, $interval, $location) {
     var self = this;
 
@@ -9,6 +12,7 @@ App.controller('MainCtrl', function(UserSrv, $interval, $location) {
     self.users = [];
     self.message = "";
 
+    /* function to logout the user */
     self.logout = function() {
         UserSrv.logout().then(function(res) {
             $location.url('/login');
@@ -17,6 +21,7 @@ App.controller('MainCtrl', function(UserSrv, $interval, $location) {
         });
     };
 
+    /* function to get the messages of the selected user */
     var getNewDisplayMessages = function() {
         var res = [];
         for (var i = 0; i < recipients.length; i++) {
@@ -30,11 +35,13 @@ App.controller('MainCtrl', function(UserSrv, $interval, $location) {
         return res;
     };
 
+    /* function to handle clicking on a user from the users list */
     self.choose = function(user) {
         self.selected = user._id;
         self.displayMessages = getNewDisplayMessages();
     };
 
+    /* function to send a message to the backend using UserSrv */
     self.sendMessage = function() {
         if (self.message) {
             var message = self.message;
@@ -48,6 +55,7 @@ App.controller('MainCtrl', function(UserSrv, $interval, $location) {
         }
     };
 
+    /* function to count the number of unseen messages in a chat log */
     var countUnseen = function(i) {
         var unseen = 0;
         for (var j = 0; j < recipients[i].messages.length; j++) {
@@ -60,6 +68,7 @@ App.controller('MainCtrl', function(UserSrv, $interval, $location) {
         return unseen;
     };
 
+    /* function to check if the list of users has been modified in the backend */
     var usersModified = function() {
         if (recipients.length != self.users.length) return true;
         for (var i = 0; i < recipients.length; i++) {
@@ -76,6 +85,7 @@ App.controller('MainCtrl', function(UserSrv, $interval, $location) {
         return false;
     };
 
+    /* function to check if the messages have been modified in the backend */
     var messagesModified = function(messages) {
         if (messages.length != self.displayMessages.length) return true;
         for (var i = 0; i < messages.length; i++) {
@@ -87,6 +97,7 @@ App.controller('MainCtrl', function(UserSrv, $interval, $location) {
         return false;
     };
 
+    /* function to check if there are any unseen messages for the selected user */
     var hasUnseenMessages = function() {
         var idx = -1;
         for (var i = 0; i < self.users.length && idx == -1; i++) {
@@ -103,6 +114,7 @@ App.controller('MainCtrl', function(UserSrv, $interval, $location) {
         }
     };
 
+    /* fetch the messages with the corresponding users */
     UserSrv.getMessages().then(function(res) {
         recipients = res.data.result;
         if (usersModified()) {
@@ -122,6 +134,7 @@ App.controller('MainCtrl', function(UserSrv, $interval, $location) {
         console.log(err);
     });
 
+    /* every 500ms, fetch the messages with the corresponding users */
     $interval(function() {
         UserSrv.getMessages().then(function(res) {
             recipients = res.data.result;
@@ -161,6 +174,7 @@ App.controller('MainCtrl', function(UserSrv, $interval, $location) {
         });
     }, 500);
 
+    /* handle the user closing the tab/browser */
     window.onbeforeunload = function () {
         if (UserSrv.getUser()) {
             UserSrv.logoutSync();

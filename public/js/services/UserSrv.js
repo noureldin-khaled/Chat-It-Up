@@ -1,3 +1,6 @@
+/**
+ * A service to handle user requests
+ */
 App.factory('UserSrv', function($http) {
     return {
         register: function(user) {

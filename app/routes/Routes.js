@@ -3,8 +3,19 @@ module.exports = function(app) {
         res.sendFile('index.html');
     });
 
+    /*****************
+    * Auth Recourse *
+    *****************/
     require('./AuthResource')(app);
+
+    /*****************
+     * User Recourse *
+     *****************/
     require('./UserResource')(app);
+
+    /********************
+     * Message Recourse *
+     ********************/
     require('./MessageResource')(app);
 
     app.use(function(req, res) {

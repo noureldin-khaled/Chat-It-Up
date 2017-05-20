@@ -1,27 +1,28 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3 col-sm-3 col-xs-4 extend" id="left-area">
-            <div class="row" id="myInfo">
+<div class="container-fluid fullHeight">
+    <div class="row fullHeight">
+        <!-- Side Area -->
+        <div class="col-md-3 col-sm-3 col-xs-4 fullHeight" id="main-side-area">
+            <div class="row" id="main-user-info">
                 <div class="col-md-1 col-sm-1 col-xs-1">
-                    <button type="button" id="logout" name="logout" ng-click="c.logout()">
-                        <i class="fa fa-sign-out icon-flipped" id="logout-icon" aria-hidden="true"></i>
+                    <button type="button" id="main-logout-button" name="logout" ng-click="c.logout()">
+                        <i class="fa fa-sign-out icon-flipped" id="main-logout-icon" aria-hidden="true"></i>
                     </button>
                 </div>
-                <div id="username" class="col-md-10 col-sm-10 col-xs-10">
+                <div id="main-user-info-username" class="col-md-10 col-sm-8 col-xs-6">
                     {{ c.user.username }}
                 </div>
             </div>
 
             <div class="row">
-                <div class="list-group" style="overflow-y: auto; height: 93vh;">
+                <div class="list-group" id="main-users-list">
                     <a href="#" class="list-group-item" ng-repeat="user in c.users" ng-click="c.choose(user)" ng-class="{ 'selected': (user._id == c.selected) }">
-                        <div class="info" style="float: left;">
+                        <div class="main-users-list-user-info">
                             <h5 class="list-group-item-heading">{{ user.username }}</h5>
                             <small class="list-group-item-text" ng-show="{{ user.online }}">Active now</small>
                             <small class="list-group-item-text" ng-show="!{{ user.online }}">offline</small>
                         </div>
 
-                        <div style="float: right;" ng-show="user.unseen > 0">
+                        <div class="main-users-list-unseen" ng-show="user.unseen > 0">
                             <span class="badge">{{ user.unseen }}</span>
                         </div>
                     </a>
@@ -29,11 +30,13 @@
             </div>
         </div>
 
-        <div class="col-md-9 col-sm-9 col-xs-8 extend no-chat" ng-show="c.selected == -1"></div>
+        <!-- If no chat is selected -->
+        <div class="col-md-9 col-sm-9 col-xs-8 fullHeight main-no-chat" ng-show="c.selected == -1"></div>
 
-        <div class="col-md-9 col-sm-9 col-xs-8 extend" id="wrapper" ng-show="c.selected != -1">
-            <div id="box" style="overflow-y: auto;" scroll-bottom="c.displayMessages">
-                <div ng-repeat="message in c.displayMessages" ng-class="{'right' : (message.sender == c.user._id), 'left': (message.recipient == c.user._id) }">
+        <!-- Main Area -->
+        <div class="col-md-9 col-sm-9 col-xs-8 fullHeight" id="main-main-area-wrapper" ng-show="c.selected != -1">
+            <div id="main-chat-box" scroll-bottom="c.displayMessages">
+                <div ng-repeat="message in c.displayMessages" ng-class="{'to-right' : (message.sender == c.user._id), 'to-left': (message.recipient == c.user._id) }">
                     <div ng-class="{'message-bubble-right' : (message.sender == c.user._id), 'message-bubble-left': (message.recipient == c.user._id) }">
                         <div class="message-text">
                             <p>{{ message.content }}</p>
@@ -42,14 +45,14 @@
                 </div>
             </div>
             <div class="container-fluid">
-                <div class="row" id="input">
+                <div class="row" id="main-input-bar">
                     <form ng-submit="c.sendMessage()">
-                        <div class="col-md-11 fullHeight" id="message-wrapper">
-                            <input type="text" id="message" name="message" placeholder="Type a message" ng-model="c.message">
+                        <div class="col-md-11 col-sm-10 col-xs-9 fullHeight" id="main-message-input-wrapper">
+                            <input type="text" id="main-message-input" name="message" placeholder="Type a message" ng-model="c.message">
                         </div>
-                        <div class="col-md-1 fullHeight">
-                            <button type="submit" id="send" name="send" ng-click="c.sendMessage()">
-                                <i class="fa fa-paper-plane" id="send-icon" aria-hidden="true"></i>
+                        <div class="col-md-1 col-sm-1 col-xs-1 fullHeight">
+                            <button type="submit" id="main-send-button" name="send" ng-click="c.sendMessage()">
+                                <i class="fa fa-paper-plane" id="main-send-icon" aria-hidden="true"></i>
                             </button>
                         </div>
                     </form>

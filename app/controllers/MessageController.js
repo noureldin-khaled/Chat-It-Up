@@ -1,11 +1,23 @@
+/**
+* Message Controller
+* @description The controller that is responsible of handling requests dealing with messages.
+*/
+
 var Message = require('../models/Message').Message;
 var User = require('../models/User').User;
 
 module.exports = {
+    /**
+     * A function to store a message
+     * @param  {HTTP} req The request object
+     * @param  {HTTP} res The response object
+     */
     store: function(req, res) {
+        /* validating content input */
         req.checkBody('content', 'required').notEmpty();
         req.sanitizeBody('content').trim();
 
+        /* validating recipient input */
         req.checkBody('recipient', 'required').notEmpty();
 
         var errors = req.validationErrors();
@@ -19,6 +31,7 @@ module.exports = {
             return;
         }
 
+        /* check that the recipient exists in the database */
         User.findById(req.body.recipient, function(err, user) {
             if (err) {
                 res.status(500).json({
@@ -31,12 +44,14 @@ module.exports = {
             }
 
             if (user) {
+                /* create message instance */
                 var message = new Message({
                     content: req.body.content,
                     sender: req.user._id,
                     recipient: req.body.recipient
                 });
 
+                /* save message instance */
                 message.save(function(err) {
                     if (err) {
                         res.status(500).json({
@@ -55,6 +70,7 @@ module.exports = {
                 });
             }
             else {
+                /* recipient doesn't exist */
                 res.status(404).json({
                     status: 'Failed',
                     message: 'The requested route was not found.'
@@ -62,7 +78,13 @@ module.exports = {
             }
         });
     },
+    /**
+     * A function to mark messages from a certain user a seen
+     * @param  {HTTP} req The request object
+     * @param  {HTTP} res The response object
+     */
     update: function(req, res) {
+        /* validating sender input */
         req.checkBody('sender', 'required').notEmpty();
 
         var errors = req.validationErrors();
@@ -76,6 +98,7 @@ module.exports = {
             return;
         }
 
+        /* mark messages from the sender to the authenticated user as seen */
         Message.update({ $and: [{ sender: req.body.sender }, { recipient: req.user._id }] }, { $set: { seen: true }}, { multi: true }, function(err) {
             if (err) {
                 res.status(500).json({
@@ -93,7 +116,13 @@ module.exports = {
             });
         });
     },
+    /**
+     * A function to get all messages for the authenticated user
+     * @param  {HTTP} req The request object
+     * @param  {HTTP} res The response object
+     */
     index: function(req, res) {
+        /* fetch messages if the authenticated user is a sender or a recipient */
         Message.find({ $or: [{ sender: req.user._id }, { recipient: req.user._id }] }, function(err, messages) {
             if (err) {
                 res.status(500).json({
@@ -105,6 +134,7 @@ module.exports = {
                 return;
             }
 
+            /* get all users except the authenticated user */
             User.find({ _id: { $ne: req.user._id } }, function(err, users) {
                 if (err) {
                     res.status(500).json({
@@ -116,6 +146,7 @@ module.exports = {
                     return;
                 }
 
+                /* group every user with the messages between that user and the authenticated user */
                 var result = [];
 
                 for (var i = 0; i < users.length; i++) {
@@ -129,6 +160,7 @@ module.exports = {
                         }
                     }
 
+                    /* sort messages by creation time */
                     currentMessages.sort(function(a, b) {
                         return a.created_at - b.created_at;
                     });

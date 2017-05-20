@@ -1,3 +1,6 @@
+/**
+ * A controller for the login.html partial
+ */
 App.controller('LoginCtrl', function(UserSrv, $location) {
     var self = this;
 
@@ -5,10 +8,12 @@ App.controller('LoginCtrl', function(UserSrv, $location) {
     self.submitted = false;
     self.error_msg = null;
 
+    /* logout the current user if for some reason he/she hasn't been logged out */
     if (UserSrv.getUser()) {
         UserSrv.logout();
     }
 
+    /* function to handle logging in */
     self.login = function() {
         self.submitted = true;
         self.error_msg = null;
@@ -51,11 +56,12 @@ App.controller('LoginCtrl', function(UserSrv, $location) {
         }
     };
 
+    /* listen for change in the username input */
     self.change = function() {
         self.LoginForm.username.$setValidity('taken', true);
     };
 
-
+    /* function to handle registration of the user */
     self.register = function() {
         self.submitted = true;
         self.error_msg = null;
@@ -100,6 +106,7 @@ App.controller('LoginCtrl', function(UserSrv, $location) {
         }
     };
 
+    /* handle the user closing the tab/browser */
     window.onbeforeunload = function () {
         if (UserSrv.getUser()) {
             UserSrv.logoutSync();

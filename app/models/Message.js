@@ -1,6 +1,21 @@
+/**
+*  Message
+*  @property {String} content: The message's content
+*  @property {Boolean} seen: if the message is seen or not (true, false)
+*  @property {ObjectId} sender: The sender of message
+*  @property {ObjectId} recipient: The recipient of message
+*  @property {Date} created_at: The message's creation time
+*  @property {Date} updated_at: The time the message was last modified
+*/
+
+/**
+ * This function is responsible for creating the Message model.
+ * @param  {Object} mongoose The Mongoose instance
+ */
 module.exports = function(mongoose) {
     var Schema = mongoose.Schema;
 
+    /* create message schema */
     var messageSchema = new Schema({
         content    : { type : String, required           : true },
         seen       : { type : Boolean, default           : false },
@@ -10,6 +25,7 @@ module.exports = function(mongoose) {
         updated_at : Date
     });
 
+    /* update created_at and updated_at fields */
     messageSchema.pre('save', function(next) {
         var currentDate = new Date();
 

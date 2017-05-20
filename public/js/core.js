@@ -1,6 +1,8 @@
 App = angular.module('App', ['ngRoute', 'ngMessages']);
 
+/* App configuration */
 App.config(function($routeProvider, $locationProvider) {
+    /* remove any hash prefixes in the URL */
     $locationProvider.hashPrefix('');
 
     $routeProvider
@@ -32,5 +34,6 @@ App.config(function($routeProvider, $locationProvider) {
         redirectTo: '/'
     });
 
+    /* remove the '#' from the URL */
     $locationProvider.html5Mode(true);
 });
