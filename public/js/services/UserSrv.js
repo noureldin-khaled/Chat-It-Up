@@ -17,6 +17,15 @@ App.factory('UserSrv', function($http) {
                 data: user
             });
         },
+        cacheLogin: function() {
+            return $http({
+                method: 'PUT',
+                url: '/api/login',
+                headers: {
+                    Authorization: this.user.token
+                }
+            });
+        },
         getMessages: function(user) {
             return $http({
                 method: 'GET',

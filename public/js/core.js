@@ -13,7 +13,7 @@ App.config(function($routeProvider, $locationProvider) {
         resolve: {
             load: function($q, UserSrv, $cookies){
                 var defer = $q.defer();
-                
+
                 var auth = $cookies.get('auth');
                 if (auth) {
                     auth = JSON.parse(auth);

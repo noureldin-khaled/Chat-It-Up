@@ -35,7 +35,7 @@ App.controller('LoginCtrl', function(UserSrv, $location, $cookies) {
                     self.error_msg = "Incorrect Username or Password";
                 }
                 else if (err.status == 403) {
-                    self.error_msg = "This account is alread logged in";
+                    self.error_msg = "This account is already logged in";
                 }
                 else {
                     var errors = err.data.errors;

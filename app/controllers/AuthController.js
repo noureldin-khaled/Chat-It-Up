@@ -159,6 +159,29 @@ module.exports = {
         });
     },
     /**
+     * A function to login the user with only an auth token
+     * @param  {HTTP} req The request object
+     * @param  {HTTP} res The response object
+     */
+    cacheLogin: function(req, res) {
+        req.user.online = true;
+        req.user.save(function(err) {
+            if (err) {
+                res.status(500).json({
+                    status: 'Failed',
+                    message: 'Internal Server Error'
+                });
+
+                console.error(err);
+                return;
+            }
+
+            res.status(200).json({
+                status: 'Succeeded'
+            });
+        });
+    },
+    /**
      * A function to logout the user
      * @param  {HTTP} req The request object
      * @param  {HTTP} res The response object

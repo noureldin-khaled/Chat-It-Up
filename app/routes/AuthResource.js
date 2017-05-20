@@ -59,6 +59,19 @@ module.exports = function(app) {
     app.post('/api/login', AuthController.login);
 
     /**
+    * A PUT route responsible for logging in a user with an auth token only.
+    * @var /api/login PUT
+    * @name /api/login PUT
+    * @example the route expects the access token as 'Authorization' in the request headers
+    * @example The route returns as a response an object in the following format
+    * {
+    * 	status: Succeeded/Failed,
+    * 	message: String showing a descriptive text
+    * }
+    */
+    app.put('/api/login', auth, AuthController.cacheLogin);
+
+    /**
     * A GET route responsible for logging out an existing user.
     * @var /api/logout GET
     * @name /api/logout GET

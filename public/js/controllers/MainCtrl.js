@@ -169,6 +169,8 @@ App.controller('MainCtrl', function(UserSrv, $interval, $location, $cookies) {
                 console.log('updating seen');
                 UserSrv.updateMessages(self.selected);
             }
+
+            UserSrv.cacheLogin();
         }, function(err) {
             console.log(err);
         });
