@@ -5,6 +5,10 @@ App.controller('LoginCtrl', function(UserSrv, $location) {
     self.submitted = false;
     self.error_msg = null;
 
+    if (UserSrv.getUser()) {
+        UserSrv.logout();
+    }
+
     self.login = function() {
         self.submitted = true;
         self.error_msg = null;
@@ -19,6 +23,9 @@ App.controller('LoginCtrl', function(UserSrv, $location) {
                 }
                 else if (err.status == 404) {
                     self.error_msg = "Incorrect Username or Password";
+                }
+                else if (err.status == 403) {
+                    self.error_msg = "This account is alread logged in";
                 }
                 else {
                     var errors = err.data.errors;
@@ -90,6 +97,12 @@ App.controller('LoginCtrl', function(UserSrv, $location) {
                     }
                 }
             });
+        }
+    };
+
+    window.onbeforeunload = function () {
+        if (UserSrv.getUser()) {
+            UserSrv.logoutSync();
         }
     };
 });

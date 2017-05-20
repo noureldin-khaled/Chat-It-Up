@@ -89,6 +89,15 @@ module.exports = {
             }
             else {
                 if (user.validPassword(req.body.password)) {
+                    if (user.online) {
+                        res.status(403).json({
+                            status: 'Failed',
+                            message: 'The user is already logged in'
+                        });
+                        
+                        return;
+                    }
+
                     var jwt = require('jsonwebtoken');
                     var token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
                         expiresIn: 60*60*24

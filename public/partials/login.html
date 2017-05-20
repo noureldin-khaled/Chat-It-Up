@@ -1,27 +1,29 @@
-<div class="row" style="margin-top: 200px;">
-    <div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-8 col-xs-offset-2">
-        <div ng-form="c.LoginForm" class="well well-lg" style="padding: 30px;">
-            <div class="has-error" style="margin-top: -20px; text-align: center" ng-show="c.error_msg">
-                <p class="help-block">{{ c.error_msg }}</p>
-            </div>
-            <div class="form-group" ng-class="{ 'has-error': (c.submitted || c.LoginForm.username.$dirty) &&  c.LoginForm.username.$invalid }">
-                <input type="text" placeholder="Username" class="form-control" name="username" ng-model="c.user.username" ng-change="c.change()" required>
-                <div class="help-block" ng-messages="c.LoginForm.username.$error">
-                    <p ng-message="required" ng-show="(c.submitted || c.LoginForm.username.$dirty)">This field is required.</p>
-                    <p ng-message="taken" ng-show="(c.submitted || c.LoginForm.username.$dirty)">This username is taken.</p>
+<div class="container">
+    <div class="row" id="login-wrapper">
+        <div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-8 col-xs-offset-2">
+            <div ng-form="c.LoginForm" class="well well-lg" id="login-form">
+                <div class="has-error" id="login-error-message" ng-show="c.error_msg">
+                    <p class="help-block">{{ c.error_msg }}</p>
                 </div>
-            </div>
-            <div class="form-group" ng-class="{ 'has-error': (c.submitted || c.LoginForm.password.$dirty) && c.LoginForm.password.$invalid }">
-                <input type="password" placeholder="Password" class="form-control" name="password" ng-model="c.user.password" required>
-                <div class="help-block" ng-messages="c.LoginForm.password.$error">
-                    <p ng-message="required" ng-show="(c.submitted || c.LoginForm.password.$dirty)">This field is required.</p>
+                <div class="form-group" ng-class="{ 'has-error': (c.submitted || c.LoginForm.username.$dirty) &&  c.LoginForm.username.$invalid }">
+                    <input type="text" placeholder="Username" class="form-control" name="username" ng-model="c.user.username" ng-change="c.change()" required>
+                    <div class="help-block" ng-messages="c.LoginForm.username.$error">
+                        <p ng-message="required" ng-show="(c.submitted || c.LoginForm.username.$dirty)">This field is required.</p>
+                        <p ng-message="taken" ng-show="(c.submitted || c.LoginForm.username.$dirty)">This username is taken.</p>
+                    </div>
                 </div>
+                <div class="form-group" ng-class="{ 'has-error': (c.submitted || c.LoginForm.password.$dirty) && c.LoginForm.password.$invalid }">
+                    <input type="password" placeholder="Password" class="form-control" name="password" ng-model="c.user.password" required>
+                    <div class="help-block" ng-messages="c.LoginForm.password.$error">
+                        <p ng-message="required" ng-show="(c.submitted || c.LoginForm.password.$dirty)">This field is required.</p>
+                    </div>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox"> Remember me</label>
+                </div>
+                <button type="button" class="btn btn-primary" ng-click="c.login()">Login</button>
+                <button type="button" class="btn btn-primary" ng-click="c.register()">Register</button>
             </div>
-            <div class="checkbox">
-                <label><input type="checkbox"> Remember me</label>
-            </div>
-            <button type="button" class="btn btn-primary" ng-click="c.login()">Login</button>
-            <button type="button" class="btn btn-primary" ng-click="c.register()">Register</button>
         </div>
     </div>
 </div>

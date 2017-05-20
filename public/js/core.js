@@ -16,7 +16,7 @@ App.config(function($routeProvider, $locationProvider) {
                 } else {
                     defer.reject("not_logged_in");
                 }
-                
+
                 return defer.promise;
             }
         }
@@ -33,4 +33,19 @@ App.config(function($routeProvider, $locationProvider) {
     });
 
     $locationProvider.html5Mode(true);
+}).directive('scrollBottom', function ($timeout) {
+    return {
+        scope: {
+            scrollBottom: "="
+        },
+        link: function (scope, element) {
+            scope.$watchCollection('scrollBottom', function (newValue) {
+                if (newValue) {
+                    $timeout(function(){
+                        $(element).scrollTop($(element)[0].scrollHeight);
+                      }, 0);
+                }
+            });
+        }
+    };
 });

@@ -4,7 +4,7 @@ var User = require('../models/User').User;
 module.exports = {
     store: function(req, res) {
         req.checkBody('content', 'required').notEmpty();
-        req.sanitizeBody('username').trim();
+        req.sanitizeBody('content').trim();
 
         req.checkBody('recipient', 'required').notEmpty();
 
@@ -60,6 +60,37 @@ module.exports = {
                     message: 'The requested route was not found.'
                 });
             }
+        });
+    },
+    update: function(req, res) {
+        req.checkBody('sender', 'required').notEmpty();
+
+        var errors = req.validationErrors();
+
+        if (errors) {
+            res.status(400).json({
+                status: 'Failed',
+                errors: errors
+            });
+
+            return;
+        }
+
+        Message.update({ $and: [{ sender: req.body.sender }, { recipient: req.user._id }] }, { $set: { seen: true }}, { multi: true }, function(err) {
+            if (err) {
+                res.status(500).json({
+                    status: 'Failed',
+                    message: 'Internal Server Error'
+                });
+
+                console.error(err);
+                return;
+            }
+
+            res.status(200).json({
+                status: 'Succeeded',
+                message: 'Message Updated Successfully'
+            });
         });
     },
     index: function(req, res) {
