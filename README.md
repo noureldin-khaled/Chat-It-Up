@@ -2,7 +2,7 @@
 A wep application for chatting, where users can register for account and chat with each other.
 
 ## How to run the project
-### A) You have to have the following requirments installed:
+### A) You have to have the following requirements installed:
 1) NodeJS, preferably v7.8.0 or higher
 2) mongodb, preferably v3.4.4 or higher
 3) npm, you can install it by running this command in your terminal
