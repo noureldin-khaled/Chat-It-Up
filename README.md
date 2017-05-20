@@ -13,7 +13,7 @@ $ sudo apt-get install npm
 ```bash
 $ git clone https://github.com/soofyhbk2007/Chat-It-Up/
 ```
-### C) Navigate to the project's directory
+### C) Navigate from your terminal to the project's directory
 
 ### D) Install the project's dependencies
 ```bash
